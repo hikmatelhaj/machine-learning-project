@@ -195,17 +195,12 @@ class CAE(nn.Module):
 
 
 cae = CAE()
-# cae.double()
-# model = cae.float()
-# cae = cae.float()
+cae.double()
 
-# res = cae(train_features[0])
 
-# print(res)
+res = cae(train_features[0])
 
-# res = cae()
 
-# print(train_features[0].reshape(3, 128, 128))
 
 
 
