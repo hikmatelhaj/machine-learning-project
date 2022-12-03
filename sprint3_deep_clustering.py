@@ -10,6 +10,7 @@ from os.path import isfile, join
 
 from fastai.vision.all import PILImage
 import matplotlib.pyplot as plt
+from torchvision import transforms
 
 # Set device
 
@@ -48,14 +49,14 @@ class FoodDataset(Dataset):
         return sample
 
 
-IMG_HEIGHT = 128
-IMG_WIDTH = 128
+IMG_HEIGHT = 28
+IMG_WIDTH = 28
 # Load data
 def transform(img):
     img_resized = img.resize((IMG_HEIGHT,IMG_WIDTH))
     img_np = np.array(img_resized)
     img_np = img_np/255
-    img_np = img_np.reshape(3, 128, 128)
+    img_np = img_np.reshape(3, IMG_HEIGHT, IMG_WIDTH)
     # img_np = img_np.astype(np.double)
     print(type(img_np[0][0][0]))
     x_np = torch.from_numpy(img_np).double()
@@ -70,9 +71,10 @@ dataloader = DataLoader(dataset, batch_size=4, shuffle=True, num_workers=0)
 
 train_features= next(iter(dataloader))
 
-# print(f"Feature batch shape: {train_features.size()}")
 
-# img = train_features[0].squeeze().reshape(IMG_HEIGHT,IMG_WIDTH,3)
+img = train_features[0].squeeze().resize(IMG_WIDTH,IMG_WIDTH,3)
+
+# print(f"Feature batch shape: {train_features.size()}")
 # plt.imshow(img, cmap="gray")
 # plt.show()
 
@@ -224,5 +226,5 @@ training_data_fashion = training_data = datasets.FashionMNIST(
 )
 
 train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
-
-res = cae(next(iter(train_dataloader))[0])
+print(next(iter(train_dataloader))[0])
+# res = cae(next(iter(train_dataloader))[0])
