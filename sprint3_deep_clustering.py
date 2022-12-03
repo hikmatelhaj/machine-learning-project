@@ -128,7 +128,7 @@ class ClusteringLayer(nn.Module):
             
 
 class CAE(nn.Module):
-    def __init__(self, input_shape=[128,128,3], num_clusters=10, filters=[32, 64, 128], leaky=True, neg_slope=0.01, activations=False, bias=True):
+    def __init__(self, input_shape=[28,28,1], num_clusters=10, filters=[32, 64, 128], leaky=True, neg_slope=0.01, activations=False, bias=True):
         super(CAE, self).__init__()
         self.activations = activations
         # bias = True
@@ -150,7 +150,7 @@ class CAE(nn.Module):
         lin_features_len = ((input_shape[0]//2//2-1) // 2) * ((input_shape[0]//2//2-1) // 2) * filters[2]
         
         print("lengte is", lin_features_len, "en", num_clusters)
-        self.embedding = nn.Linear(225, num_clusters, bias=bias)
+        self.embedding = nn.Linear(lin_features_len, num_clusters, bias=bias)
         self.deembedding = nn.Linear(num_clusters, lin_features_len, bias=bias)
         out_pad = 1 if input_shape[0] // 2 // 2 % 2 == 0 else 0
         self.deconv3 = nn.ConvTranspose2d(filters[2], filters[1], 3, stride=2, padding=0, output_padding=out_pad, bias=bias)
@@ -193,11 +193,11 @@ class CAE(nn.Module):
 
 
 cae = CAE()
-cae.double()
+# cae.double()
 # model = cae.float()
 # cae = cae.float()
 
-res = cae(train_features[0])
+# res = cae(train_features[0])
 
 # print(res)
 
@@ -205,3 +205,24 @@ res = cae(train_features[0])
 
 # print(train_features[0].reshape(3, 128, 128))
 
+
+
+
+
+
+
+
+### test op fashion
+from torchvision.transforms import ToTensor
+from torchvision import datasets
+
+training_data_fashion = training_data = datasets.FashionMNIST(
+    root="data",
+    train=True,
+    download=True,
+    transform=ToTensor()
+)
+
+train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
+
+res = cae(next(iter(train_dataloader))[0])
