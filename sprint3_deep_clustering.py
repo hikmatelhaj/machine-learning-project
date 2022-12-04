@@ -195,10 +195,10 @@ class CAE(nn.Module):
 
 
 cae = CAE()
-cae.double()
+# cae.double()
 
 
-res = cae(train_features[0])
+# res = cae(train_features[0])
 
 
 
@@ -222,4 +222,4 @@ training_data_fashion = training_data = datasets.FashionMNIST(
 
 train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
 print(next(iter(train_dataloader))[0])
-# res = cae(next(iter(train_dataloader))[0])
+res = cae(next(iter(train_dataloader))[0])
