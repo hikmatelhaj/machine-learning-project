@@ -7,3 +7,5 @@ coords_vijfde.csv
 *.jpg
 persoonlijk/
 data/
+model/
+results/
