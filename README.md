@@ -22,7 +22,6 @@ To run the code in this repository, you will need to have Python and the followi
 - tensorflow
 - matplotlib
 - seaborn
-- nltk
 - transformers
 
 You can install these packages using pip by running the command `pip install -r requirements.txt`.
